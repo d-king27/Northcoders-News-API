@@ -1,0 +1,31 @@
+{
+  "name": "northcoders-news-api",
+  "version": "1.0.0",
+  "description": "NorthCoders News Server",
+  "main": "server.js",
+  "scripts": {
+    "test": "NODE_ENV=test mocha ./spec/*",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/d-king27/Northcoders-News-API.git"
+  },
+  "author": "Dan K",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/d-king27/Northcoders-News-API/issues"
+  },
+  "homepage": "https://github.com/d-king27/Northcoders-News-API#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
+    "mongoose": "^4.13.4",
+    "nodemon": "^1.12.1"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "supertest": "^3.0.0"
+  }
+}
