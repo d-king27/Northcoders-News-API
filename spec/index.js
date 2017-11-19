@@ -1,36 +1,44 @@
 const { expect } = require('chai');
-//const request = require('supertest');
+const request = require('supertest');
 const app = require('../server');
 const mongoose = require('mongoose');
 const saveTestData = require('./getTestData.js');
 mongoose.Promise = Promise
 process.env.NODE_ENV = 'test';
-let a = 'hey'
-console.log(a)
 
-describe('test',()=>{
-    it('works',()=>{
-        expect(a).to.equal('hey')
+describe('API', () => {
+    let baseData;
+    beforeEach(() => {
+        return mongoose.connection.dropDatabase()
+            .then(saveTestData)
+            .then(data => {
+                baseData = data;
+            })
+            .catch(console.error);
     })
-})
+    describe('GET /api/topics', () => {
+        it('returns an array of objects', () => {
+            return request(app)
+                .get('/api/topics')
+                .expect(200)
+                .then(topics => {
+                        expect(Array.isArray(topics.body)).to.equal(true);
+                        expect(topics.body.length).to.equal(3);
+                })
+            });
+    });
+    describe('/',()=>{
+        it('final check then disconnect', () => {
+            return request(app)
+                .get('/api')
+                .expect(200)
+                .then(q => {
+                        console.log(q.text)
+                        expect(q.text).to.be.a('string');
+                        mongoose.disconnect()
+                })
+            });
 
-// describe('API', () => {
-//     let baseData;
-//     beforeEach(() => {
-//         return mongoose.connection.dropDatabase()
-//             .then(saveTestData)
-//             .then(data => {
-//                 baseData = data;
-//                 console.log('hey')
-//             })
-//             .catch(console.error);
-//     })
-//     it('/', () => {
-//         return request(app)
-//             .get('/api')
-//             .expect(200)
-//             .then(q => {
-//                     expect(q.text).to.be.a('string');
-//             })
-//         });
-// })
+    })
+   
+})

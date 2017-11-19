@@ -4,7 +4,7 @@
   "description": "NorthCoders News Server",
   "main": "server.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha ./spec/*",
+    "test": "NODE_ENV=test mocha ./spec/index.js",
     "start": "nodemon index.js"
   },
   "repository": {
