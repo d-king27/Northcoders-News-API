@@ -1,5 +1,5 @@
 var mongoose = require('mongoose')
-var DBs = require('../config.js').DB;
+var DBs = require('../config').DB;
 const { Users, Comments, Topics, Articles } = require('../models/models');
 mongoose.Promise = Promise
 
@@ -63,7 +63,7 @@ mongoose.Promise = Promise
         });
     }
     
-    mongoose.connect(DBs.dev, function (err) {
+    mongoose.connect(DBs.test, function (err) {
       if (!err) {
         mongoose.connection.dropDatabase()
         .then(saveTestData)

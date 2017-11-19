@@ -1,5 +1,8 @@
-var mongoose = require('mongoose')
-var DB = ''
+const mongoose = require('mongoose')
+const config = require('../config')
+let env = process.env.NODE_NEV
+if(!env){env = 'dev'}
+const DB = config.DB[env]
 const { Users, Comments, Topics, Articles } = require('../models/models');
 mongoose.Promise = Promise
 const usersData = require('./usersData')
