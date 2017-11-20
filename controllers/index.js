@@ -40,6 +40,21 @@ function getAllArticles(req, res, next) {
         .catch(err => next(err));
 }
 
+function getCommentsByArticleId (req, res, next) {
+    Comments.find({belongs_to: req.params.id})
+        .then(comments => {
+            res.send(comments);
+        })
+        .catch(err => {
+            if(err.name === 'CastError'){
+            next({err: err, type: 'CastError'})    
+            }
+            else {
+                next(err)
+            }
+        });
+}
+
 
 
 // GET /api/articles/:article_id/comments
@@ -60,4 +75,4 @@ function getAllArticles(req, res, next) {
 // GET /api/users/:username
 // Returns a JSON object with the profile data for the specified user.
 
-module.exports = {getAllTopics, getArticlesByTopic,getAllArticles}
+module.exports = {getAllTopics, getArticlesByTopic,getAllArticles,getCommentsByArticleId}

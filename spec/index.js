@@ -56,6 +56,23 @@ describe('API', () => {
             });
     });
 
+    describe('GET /api/articles/:article_id/comments', () => {
+        it('returns an array of comments for the specified article', () => {
+            return request(app)
+                .get(`/api/articles/${baseData.articles[0]._id}/comments`)
+                .expect(200)
+                .then(comments => {
+                    expect(Array.isArray(comments.body)).to.equal(true);
+                    expect(comments.body.length).to.equal(2);
+                })
+        });
+        it('returns 404 if topic_id parameter is invalid', () => {
+            return request(app)
+                .get(`/api/articles/ohNoHelp/comments`)
+                .expect(404);
+        });
+    });
+
 
 
     describe('/',()=>{
