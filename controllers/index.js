@@ -18,7 +18,6 @@ function getArticlesByTopic (req, res, next) {
             return Articles.find({belongs_to: topic.slug})
         })
         .then(articles => {
-            console.log('called')
             res.status(200)
             res.send(articles);
         })
@@ -33,11 +32,15 @@ function getArticlesByTopic (req, res, next) {
 }
 
 
-// GET /api/topics/:topic_id/articles
-// Return all the articles for a certain topic
+function getAllArticles(req, res, next) {
+    Articles.find()
+        .then(articles => {
+            res.send(articles);
+        })
+        .catch(err => next(err));
+}
 
-// GET /api/articles
-// Returns all the articles
+
 
 // GET /api/articles/:article_id/comments
 // Get all the comments for a individual article
@@ -57,4 +60,4 @@ function getArticlesByTopic (req, res, next) {
 // GET /api/users/:username
 // Returns a JSON object with the profile data for the specified user.
 
-module.exports = {getAllTopics, getArticlesByTopic}
+module.exports = {getAllTopics, getArticlesByTopic,getAllArticles}

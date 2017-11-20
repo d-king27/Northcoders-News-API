@@ -44,9 +44,17 @@ describe('API', () => {
         });
     });
 
-
-
-
+    describe('GET /api/articles', () => {
+        it('returns an array of objects', () => {
+            return request(app)
+                .get('/api/articles')
+                .expect(200)
+                .then(articles => {
+                        expect(articles.body).to.be.an('array');
+                       expect(articles.body.length).to.equal(2);
+                })
+            });
+    });
 
 
 
