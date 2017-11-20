@@ -4,7 +4,6 @@ const app = require('../server');
 const mongoose = require('mongoose');
 const saveTestData = require('./getTestData.js');
 mongoose.Promise = Promise
-process.env.NODE_ENV = 'test';
 
 describe('API', () => {
     let baseData;
@@ -27,6 +26,30 @@ describe('API', () => {
                 })
             });
     });
+   
+    describe('GET /api/topics/:topic_id/articles', () => {
+        it('returns an array of article objects for the specified topic', () => {
+            return request(app)
+                .get(`/api/topics/${baseData.topics[0]._id}/articles`)
+                .expect(200)
+                .then(articles => {
+                    expect(Array.isArray(articles.body)).to.equal(true);
+                    expect(articles.body.length).to.equal(1);
+                });
+        });
+        it('returns 404 if topic_id parameter is invalid', () => {
+            return request(app)
+                .get(`/api/topics/hello/articles`)
+                .expect(404);
+        });
+    });
+
+
+
+
+
+
+
     describe('/',()=>{
         it('final check then disconnect', () => {
             return request(app)

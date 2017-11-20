@@ -29,4 +29,19 @@ app.use('/api/topics', topicsRouter)
 app.use('/api/comments', commentsRouter)
 app.use('/api/articles', articlesRouter)
 
+app.use('/*', (req, res, next) => {
+    res.status(404);
+    res.send({msg: 'Page not found'});
+  })
+app.use((err, req, res, next) => {
+    if(err.type === 'CastError') {
+      res.status(404);
+      res.send({msg: 'Page not found'});
+    }
+    else {
+      res.status(500);
+      res.send({msg: err});
+    }
+  });
+
 module.exports = app
