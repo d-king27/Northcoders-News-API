@@ -22,7 +22,7 @@ app.use(bodyParser.json())
 app.use(cors())
 app.get('/api',(req,res)=>{
     res.send('listening')
-    console.log('requested')
+    console.log('test complete')
 })
 app.use('/api/users', usersRouter)
 app.use('/api/topics', topicsRouter)

@@ -150,6 +150,25 @@ describe('API', () => {
         });
     });
 
+    describe('GET /api/users/:username', () => {
+        it('returns a JSON object with the profile data for the specific user', () => {
+          return request(app)
+              .get(`/api/users/${baseData.user.username}`)
+              .expect(200)
+              .then(user => {
+                  expect(user.body).to.be.an('object');
+                  expect(user.body.username).to.equal('tester');
+              })
+              
+      });
+      it('returns 404 if username parameter is invalid', () => {
+          return request(app)
+              .get(`/api/users/banana/`)
+              .expect(404);
+      });
+  });
+
+
 
 
     describe('/',()=>{
@@ -158,7 +177,6 @@ describe('API', () => {
                 .get('/api')
                 .expect(200)
                 .then(q => {
-                        console.log(q.text)
                         expect(q.text).to.be.a('string');
                         mongoose.disconnect()
                 })

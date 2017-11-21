@@ -135,10 +135,28 @@ function deleteComment (req, res, next) {
         });
 }
 
-// DELETE /api/comments/:comment_id
-// Deletes a comment
+function getUserById(req,res,next){
+    Users.findOne({username:req.params.username})
+    .then((user)=>{
+        if(user === null){
+            res.status(404)
+            res.send({msg:'ERROR:PAGE NOT FOUND'})
+        }
+        var oneUser = JSON.stringify(user)
+        res.status(200)
+        res.setHeader("Content-Type", 'application/json')
+        res.send(oneUser)
+    })
+    .catch(err => {
+        if(err.name === 'CastError'){
+        next({err: err, type: 'CastError'})    
+        }
+        else {
+            next(err)
+        }
+    });
 
-// GET /api/users/:username
-// Returns a JSON object with the profile data for the specified user.
+}
 
-module.exports = {deleteComment ,getAllTopics, getArticlesByTopic,getAllArticles,getCommentsByArticleId, postComment,voteArticleById,voteCommentById}
+
+module.exports = {deleteComment,getUserById ,getAllTopics, getArticlesByTopic,getAllArticles,getCommentsByArticleId, postComment,voteArticleById,voteCommentById}
