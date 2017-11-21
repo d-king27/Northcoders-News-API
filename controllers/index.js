@@ -56,9 +56,25 @@ function getCommentsByArticleId (req, res, next) {
 }
 
 
+function postComment (req, res, next) {
+    let comment = new Comments({
+            body: req.body.comment, 
+            belongs_to: req.params.id
+        });
+      comment.save()
+        .then(() => {
+            return Comments.find()
+        })
+        .then(comments => {
+            res.status(201);
+            res.send(comments);
+        })
+        .catch(err => next(err));
+}
 
-// GET /api/articles/:article_id/comments
-// Get all the comments for a individual article
+
+
+
 
 // POST /api/articles/:article_id/comments
 // Add a new comment to an article. This route requires a JSON body with a comment key and value pair e.g: {"comment": "This is my new comment"}
@@ -75,4 +91,4 @@ function getCommentsByArticleId (req, res, next) {
 // GET /api/users/:username
 // Returns a JSON object with the profile data for the specified user.
 
-module.exports = {getAllTopics, getArticlesByTopic,getAllArticles,getCommentsByArticleId}
+module.exports = {getAllTopics, getArticlesByTopic,getAllArticles,getCommentsByArticleId, postComment}

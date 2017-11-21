@@ -4,6 +4,7 @@ const app = require('../server');
 const mongoose = require('mongoose');
 const saveTestData = require('./getTestData.js');
 mongoose.Promise = Promise
+const _ = require('underscore')
 
 describe('API', () => {
     let baseData;
@@ -70,6 +71,22 @@ describe('API', () => {
             return request(app)
                 .get(`/api/articles/ohNoHelp/comments`)
                 .expect(404);
+        });
+    });
+
+    describe('POST /api/articles/:article_id/comments', () => {
+        it('returns an array of comments for a specific article with a new comment added', () => {
+            return request(app)
+                .post(`/api/articles/${baseData.articles[0]._id}/comments`)
+                .send({
+                    "comment": "test 1"
+                })
+                .expect(201)
+                .then(comments => {
+                    expect(Array.isArray(comments.body)).to.equal(true);
+                    expect(comments.body.length).to.equal(3);
+                    expect(_.pluck(comments.body,'body').includes('test 1')).to.equal(true);
+                });
         });
     });
 
