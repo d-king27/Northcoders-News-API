@@ -73,17 +73,67 @@ function postComment (req, res, next) {
 }
 
 
+function voteArticleById (req, res, next) {
+    let inc = 0;
+    if(req.query.votes === 'UP') inc = 1;
+    else if(req.query.votes === 'DOWN') inc = -1;
+    Articles.findByIdAndUpdate({_id: req.params.article_id}, {$inc: {votes: inc}})
+        .then(() => {
+            return Articles.findById(req.params.article_id);
+        })
+        .then(article => {
+            res.status(201);
+            res.send(article);
+        })
+        .catch(err => {
+            if(err.name === 'CastError'){
+            next({err: err, type: 'CastError'})    
+            }
+            else {
+                next(err)
+            }
+        });
+}
 
+function voteCommentById (req, res, next) {
+    let inc = 0;
+    if(req.query.votes === 'UP') inc = 1;
+    else if(req.query.votes === 'DOWN') inc = -1;
+    Comments.findByIdAndUpdate({_id: req.params.comment_id}, {$inc: {votes: inc}})
+        .then(() => {
+            return Comments.findById(req.params.comment_id);
+        })
+        .then(comment => {
+            res.status(201);
+            res.send(comment);
+        })
+        .catch(err => {
+            if(err.name === 'CastError'){
+            next({err: err, type: 'CastError'})    
+            }
+            else {
+                next(err)
+            }
+        });
+}
 
-
-// POST /api/articles/:article_id/comments
-// Add a new comment to an article. This route requires a JSON body with a comment key and value pair e.g: {"comment": "This is my new comment"}
-
-// PUT /api/articles/:article_id
-// Increment or Decrement the votes of an article by one. This route requires a vote query of 'up' or 'down' e.g: /api/articles/:article_id?vote=up
-
-// PUT /api/comments/:comment_id
-// Increment or Decrement the votes of a comment by one. This route requires a vote query of 'up' or 'down' e.g: /api/comments/:comment_id?vote=down
+function deleteComment (req, res, next) {
+    Comments.findByIdAndRemove(req.params.id)
+        .then(() => {
+            return Comments.find()
+        })
+        .then(comments => {
+            res.send(comments);
+        })
+        .catch(err => {
+            if(err.name === 'CastError'){
+            next({err: err, type: 'CastError'})    
+            }
+            else {
+                next(err)
+            }
+        });
+}
 
 // DELETE /api/comments/:comment_id
 // Deletes a comment
@@ -91,4 +141,4 @@ function postComment (req, res, next) {
 // GET /api/users/:username
 // Returns a JSON object with the profile data for the specified user.
 
-module.exports = {getAllTopics, getArticlesByTopic,getAllArticles,getCommentsByArticleId, postComment}
+module.exports = {deleteComment ,getAllTopics, getArticlesByTopic,getAllArticles,getCommentsByArticleId, postComment,voteArticleById,voteCommentById}

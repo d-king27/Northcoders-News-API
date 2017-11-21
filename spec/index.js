@@ -90,6 +90,66 @@ describe('API', () => {
         });
     });
 
+    describe('PUT /api/articles/:article_id', () => {
+        it('increments votes by one on specified article', () => {
+            return request(app)
+                .put(`/api/articles/${baseData.articles[0]._id}?votes=UP`)
+                .expect(201)
+                .then(article => {
+                    expect(article.body).to.be.an('object');
+                    expect(article.body.votes).to.equal(1);
+                });
+        });
+        it('returns 404 if topic_id parameter is invalid', () => {
+            return request(app)
+                .put(`/api/articles/ohNoHelp/`)
+                .expect(404);
+        });
+    });
+    describe('PUT /api/comments/:comment_id', () => {
+        it('increments votes by one on specified comment', () => {
+            return request(app)
+                .put(`/api/comments/${baseData.comments[0]._id}?votes=UP`)
+                .expect(201)
+                .then(comment => {
+                    expect(comment.body).to.be.an('object');
+                    expect(comment.body.votes).to.equal(1);
+                });
+        });
+        it('decrements votes by one on specified comment', () => {
+            return request(app)
+                .put(`/api/comments/${baseData.comments[1]._id}?votes=DOWN`)
+                .expect(201)
+                .then(comment => {
+                    expect(comment.body).to.be.an('object');
+                    expect(comment.body.votes).to.equal(-1);
+                });
+        });
+        it('returns 404 if comment_id parameter is invalid', () => {
+            return request(app)
+                .put(`/api/comments/ohNoHelp/`)
+                .expect(404);
+        });
+    });
+
+    describe('DELETE /api/comments/:comment_id', () => {
+        it('deletes the specified comment', () => {
+            return request(app)
+                .delete(`/api/comments/${baseData.comments[1]._id}`)
+                .expect(200)
+                .then(comments => {
+                    expect(comments.body).to.be.an('array');
+                    expect(comments.body.length).to.equal(1);
+                })
+                
+        });
+        it('returns 404 if comment_id parameter is invalid', () => {
+            return request(app)
+                .delete(`/api/comments/banana/`)
+                .expect(404);
+        });
+    });
+
 
 
     describe('/',()=>{
