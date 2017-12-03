@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const config = require("./config");
 if(!process.env.NODE_ENV){process.env.NODE_ENV = "dev";}
-const db = config.DB[process.env.NODE_ENV];
+let db = config.DB[process.env.NODE_ENV];
 if(!db){
     db = 'mongodb://dev:banana@ds042677.mlab.com:42677/nc-news-api-dev'
 }
