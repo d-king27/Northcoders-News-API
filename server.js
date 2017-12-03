@@ -3,6 +3,9 @@ const app = express();
 const config = require("./config");
 if(!process.env.NODE_ENV){process.env.NODE_ENV = "dev";}
 const db = config.DB[process.env.NODE_ENV];
+if(!db){
+    db = 'mongodb://dev:banana@ds042677.mlab.com:42677/nc-news-api-dev'
+}
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -20,6 +23,9 @@ mongoose.connect(db, {useMongoClient: true})
 
 app.use(bodyParser.json());
 app.use(cors());
+app.get('/',(req,res)=>{
+    res.send('https://github.com/d-king27/Northcoders-News-API')
+})
 app.get("/api",(req,res)=>{
     res.send("listening");
     console.log("test complete");
