@@ -12,11 +12,10 @@ function getAllTopics (req, res, next) {
 }
 
 function getArticlesByTopic (req, res, next) {
-
-   return Topics.findById(req.params.id)
-        .then(topic => {
-            return Articles.find({belongs_to: topic.slug})
-        })
+    let chosenTopic = req.params.topic.toLowerCase()
+    return Topics.find({slug:chosenTopic})
+    .then((topicFound)=>{
+        return Articles.find({belongs_to: chosenTopic})
         .then(articles => {
             res.status(200)
             res.send(articles);
@@ -29,6 +28,8 @@ function getArticlesByTopic (req, res, next) {
                 next(err)
             }
         });
+
+    })
 }
 
 
