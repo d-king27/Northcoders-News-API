@@ -81,8 +81,10 @@ npm test
 A standard set of results unit test is shown below
 
 ```
-GET /api/articles
-      ✓ returns an array of objects
+ PUT /api/comments/:comment_id
+      ✓ increments votes by one on specified comment (45ms)
+      ✓ decrements votes by one on specified comment (49ms)
+      ✓ returns 404 if comment_id parameter is invalid
 
 ```
 
