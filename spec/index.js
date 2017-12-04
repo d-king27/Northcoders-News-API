@@ -6,16 +6,16 @@ const saveTestData = require('./getTestData.js');
 mongoose.Promise = Promise
 const _ = require('underscore')
 
-describe('API', () => {
-    let baseData;
-    beforeEach(() => {
-        return mongoose.connection.dropDatabase()
-            .then(saveTestData)
-            .then(data => {
-                baseData = data;
-            })
-            .catch(console.error);
-    })
+    describe('API', () => {
+        let baseData;
+        beforeEach(() => {
+            return mongoose.connection.dropDatabase()
+                .then(saveTestData)
+                .then(data => {
+                    baseData = data;
+                })
+                .catch(console.error);
+        })
     describe('GET /api/topics', () => {
         it('returns an array of objects', () => {
             return request(app)
