@@ -66,6 +66,9 @@ Return all the articles for a certain topic
 -GET /api/articles
 Returns all the articles
 
+-GET /api/articles/:id
+Returns an object of the specific article found by the mongo id
+
 -GET /api/articles/:article_id/comments
 Get all the comments for a individual article
 
