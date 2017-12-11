@@ -1,6 +1,6 @@
 const {getUserById} = require("./user.js");
 const {deleteComment,voteCommentById,postComment,getCommentsByArticleId} = require("./comments.js");
-const {voteArticleById,getAllArticles} = require("./articles.js");
+const {voteArticleById,getAllArticles,getArticleByid} = require("./articles.js");
 const {getAllTopics,getArticlesByTopic} = require("./topics.js");
 
 module.exports = {voteArticleById,
@@ -11,5 +11,6 @@ module.exports = {voteArticleById,
     postComment,
     getCommentsByArticleId,
     getAllTopics,
-    getArticlesByTopic
+    getArticlesByTopic,
+    getArticleByid
 }

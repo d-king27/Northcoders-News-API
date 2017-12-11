@@ -60,6 +60,17 @@ describe("API", () => {
                 });
         });
     });
+    describe("GET /api/articles/:id", () => {
+        it("returns an object of the specific article", () => {
+            return request(app)
+                .get(`/api/articles/${baseData.articles[0]._id}`)
+                .expect(200)
+                .then(article => {
+                    expect(article.body).to.be.an("object");
+                    expect(article.body.title).to.equal(baseData.articles[0].title);
+                });
+        });
+    });
 
     describe("GET /api/articles/:article_id/comments", () => {
         it("returns an array of comments for the specified article", () => {

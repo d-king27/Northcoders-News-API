@@ -11,6 +11,14 @@ function getAllArticles(req, res, next) {
         .catch(err => next(err));
 }
 
+function getArticleByid(req, res, next) {
+    Article.findById(req.params.id)
+        .then(article => {
+            res.send(article);
+        })
+        .catch(err => next(err));
+}
+
 function voteArticleById (req, res, next) {
     let inc = 0;
     if(req.query.votes === "UP") inc = 1;
@@ -33,4 +41,4 @@ function voteArticleById (req, res, next) {
         });
 }
 
-module.exports= {voteArticleById,getAllArticles};
+module.exports= {voteArticleById,getAllArticles,getArticleByid};
