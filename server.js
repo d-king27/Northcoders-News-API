@@ -29,18 +29,20 @@ app.get("/", (req, res) => {
 app.get("/api", (req, res) => {
     res.send("listening");
 });
+
 app.use("/api/users", usersRouter);
 app.use("/api/topics", topicsRouter);
 app.use("/api/comments", commentsRouter);
 app.use("/api/articles", articlesRouter);
 
-app.use("/*", (req, res, next) => {
+app.use('/*', (req, res, next) => {
     res.status(404);
-    res.send({ msg: "Page not found" });
-});
+    res.send({msg: 'Page not found'});
+  })
+
 app.use((err, req, res, next) => {
     if (err.type === "CastError") {
-        res.status(404);
+        res.status(400);
         res.send({ msg: "Page not found" });
     }
     else {

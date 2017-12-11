@@ -29,6 +29,14 @@ describe("API", () => {
         });
     });
    
+    describe("GET /*", () => {
+        it("returns 404 for bad requests", () => {
+            return request(app)
+                .get("/banana")
+                .expect(404)
+        });
+    });
+   
     describe("GET /api/topics/:topic/articles", () => {
         it("returns an array of article objects for the specified topic", () => {
             return request(app)
@@ -39,11 +47,6 @@ describe("API", () => {
                     expect(articles.body.length).to.equal(1);
                 });
         });
-        // it('returns 404 if topic_id parameter is invalid', () => {
-        //     return request(app)
-        //         .get(`/api/topics/hello/articles`)
-        //         .expect(404);
-        // });
     });
 
     describe("GET /api/articles", () => {
@@ -68,10 +71,10 @@ describe("API", () => {
                     expect(comments.body.length).to.equal(2);
                 });
         });
-        it("returns 404 if topic_id parameter is invalid", () => {
+        it("returns 400 if article_id parameter is invalid", () => {
             return request(app)
                 .get("/api/articles/ohNoHelp/comments")
-                .expect(404);
+                .expect(400);
         });
     });
 
@@ -101,10 +104,10 @@ describe("API", () => {
                     expect(article.body.votes).to.equal(1);
                 });
         });
-        it("returns 404 if topic_id parameter is invalid", () => {
+        it("returns 400 if article_id parameter is invalid", () => {
             return request(app)
                 .put("/api/articles/ohNoHelp/")
-                .expect(404);
+                .expect(400);
         });
     });
     describe("PUT /api/comments/:comment_id", () => {
@@ -126,10 +129,10 @@ describe("API", () => {
                     expect(comment.body.votes).to.equal(-1);
                 });
         });
-        it("returns 404 if comment_id parameter is invalid", () => {
+        it("returns 400 if comment_id parameter is invalid", () => {
             return request(app)
                 .put("/api/comments/ohNoHelp/")
-                .expect(404);
+                .expect(400);
         });
     });
 
@@ -144,10 +147,10 @@ describe("API", () => {
                 });
                 
         });
-        it("returns 404 if comment_id parameter is invalid", () => {
+        it("returns 400 if comment_id parameter is invalid", () => {
             return request(app)
                 .delete("/api/comments/banana/")
-                .expect(404);
+                .expect(400);
         });
     });
 

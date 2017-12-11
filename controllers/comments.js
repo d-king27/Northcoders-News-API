@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 mongoose.Promise = Promise;
 const {Comment} = require("../models/models");
 
-function getCommentByArticleId (req, res, next) {
+function getCommentsByArticleId (req, res, next) {
     Comment.find({belongs_to: req.params.id})
         .then(comments => {
             res.send(comments);
@@ -74,4 +74,4 @@ function deleteComment (req, res, next) {
         });
 }
 
-module.exports={deleteComment,voteCommentById,postComment,getCommentByArticleId};
+module.exports={deleteComment,voteCommentById,postComment,getCommentsByArticleId};
