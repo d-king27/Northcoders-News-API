@@ -6,12 +6,13 @@ This is the RESTful API for the Northcoders news project which is a site similar
 
 ### Prerequisites
 
+
 This project is live and can be accessed via the URL https://nc-news-api-dk.herokuapp.com/
 
 or
 
 The project can be run locally via Node.js and npm
-
+(minmum version v8.3.0)
 installation instructions can be found here
 
 ```
@@ -35,6 +36,24 @@ npm install
 npm start
 ```
 server should now be listening on port localhost:3001 on your local machine
+
+
+### Database
+
+database used: mongod version: 3.4.9 (MMAPv1)
+
+to seed the database for testing purposes run the seed.test.js in command line
+
+```
+node ./data/seed.test.js
+```
+to seed the database for use run the seed.js in command line
+
+```
+node ./data/seed.js
+```
+This will populate the database with a base set of data for each(NB the tests use supertest which seeds the database automatically)
+
 
 ## Routes
 
@@ -69,6 +88,8 @@ Deletes a comment if the comment was created by the Northcoder user
 Returns a JSON object with the profile data for the specified user.
 
 ## Running the tests
+
+As mentioned above the tests with automatically seed the database
 
 The project has tests for every route using the supertest libary which can be run using npm test
 
