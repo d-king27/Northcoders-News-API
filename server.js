@@ -1,3 +1,5 @@
+/* eslint-disable  no-console */
+/* eslint-disable  no-unused-vars */
 const express = require("express");
 const app = express();
 const config = require("./config");
@@ -35,10 +37,10 @@ app.use("/api/topics", topicsRouter);
 app.use("/api/comments", commentsRouter);
 app.use("/api/articles", articlesRouter);
 
-app.use('/*', (req, res, next) => {
+app.use("/*", (req, res, next) => {
     res.status(404);
-    res.send({msg: 'Page not found'});
-  })
+    res.send({msg: "Page not found"});
+});
 
 app.use((err, req, res, next) => {
     if (err.type === "CastError") {
