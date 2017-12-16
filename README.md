@@ -42,11 +42,6 @@ server should now be listening on port localhost:3001 on your local machine
 
 database used: mongod version: 3.4.9 (MMAPv1)
 
-to seed the database for testing purposes run the seed.test.js in command line
-
-```
-node ./data/seed.test.js
-```
 to seed the database for use run the seed.js in command line
 
 ```
